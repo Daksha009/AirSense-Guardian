@@ -13,7 +13,7 @@ from models.action_engine import ActionEngine
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 # Initialize models
 predictor = AQIPredictor()
@@ -73,6 +73,30 @@ def get_current_aqi():
             traffic_density
         )
         
+        # Get alerts
+        alerts = []
+        current_aqi = aqi_data.get('aqi', 0)
+        
+        # Check current conditions
+        if current_aqi > 150:
+            alerts.append({
+                'type': 'warning',
+                'severity': 'high' if current_aqi > 200 else 'moderate',
+                'message': f'Current AQI is {current_aqi:.0f} - Unhealthy conditions detected',
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        # Check future predictions
+        for pred in predictions:
+            if pred.get('aqi', 0) > 150:
+                alerts.append({
+                    'type': 'prediction',
+                    'severity': 'high' if pred.get('aqi', 0) > 200 else 'moderate',
+                    'message': f'High AQI ({pred.get("aqi", 0):.0f}) expected at {pred.get("time", "N/A")}',
+                    'timestamp': pred.get('time', datetime.now().isoformat()),
+                    'aqi': pred.get('aqi', 0)
+                })
+        
         return jsonify({
             'current': {
                 'aqi': aqi_data.get('aqi', 0),
@@ -86,7 +110,8 @@ def get_current_aqi():
             'traffic_density': traffic_density,
             'sources': sources,
             'predictions': predictions,
-            'actions': actions
+            'actions': actions,
+            'alerts': alerts
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -226,21 +251,38 @@ def fetch_openaq_data(lat, lon):
                         'no2': no2
                     }
         
-        # Fallback: Use mock data if API fails
+        # Fallback: Use realistic Delhi AQI data (typical range: 150-250)
+        base_aqi = 180  # Typical Delhi AQI
+        variation = np.random.randint(-30, 50)
+        aqi = max(50, min(400, base_aqi + variation))
+        
+        # Calculate pollutants based on AQI
+        pm25 = max(10, aqi * 0.4 + np.random.randint(-5, 10))
+        pm10 = max(20, aqi * 0.6 + np.random.randint(-10, 15))
+        no2 = max(15, aqi * 0.2 + np.random.randint(-5, 10))
+        
         return {
-            'aqi': 120 + np.random.randint(-20, 40),
-            'pm25': 45 + np.random.randint(-10, 20),
-            'pm10': 80 + np.random.randint(-15, 30),
-            'no2': 30 + np.random.randint(-10, 15)
+            'aqi': round(aqi),
+            'pm25': round(pm25, 1),
+            'pm10': round(pm10, 1),
+            'no2': round(no2, 1)
         }
     except Exception as e:
         print(f"Error fetching OpenAQ data: {e}")
-        # Return mock data
+        # Fallback: Use realistic Delhi AQI data
+        base_aqi = 180
+        variation = np.random.randint(-30, 50)
+        aqi = max(50, min(400, base_aqi + variation))
+        
+        pm25 = max(10, aqi * 0.4 + np.random.randint(-5, 10))
+        pm10 = max(20, aqi * 0.6 + np.random.randint(-10, 15))
+        no2 = max(15, aqi * 0.2 + np.random.randint(-5, 10))
+        
         return {
-            'aqi': 120 + np.random.randint(-20, 40),
-            'pm25': 45 + np.random.randint(-10, 20),
-            'pm10': 80 + np.random.randint(-15, 30),
-            'no2': 30 + np.random.randint(-10, 15)
+            'aqi': round(aqi),
+            'pm25': round(pm25, 1),
+            'pm10': round(pm10, 1),
+            'no2': round(no2, 1)
         }
 
 def fetch_weather_data(lat, lon):
@@ -264,26 +306,27 @@ def fetch_weather_data(lat, lon):
             main = data.get('main', {})
             
             return {
-                'wind_speed': wind.get('speed', 0) * 3.6,  # Convert m/s to km/h
+                'wind_speed': round(wind.get('speed', 0) * 3.6, 1),  # Convert m/s to km/h
                 'humidity': main.get('humidity', 50),
-                'temperature': main.get('temp', 25),
+                'temperature': round(main.get('temp', 25), 1),
                 'pressure': main.get('pressure', 1013)
             }
         
-        # Fallback: Mock data
+        # Fallback: Realistic Delhi weather data
         return {
-            'wind_speed': 5 + np.random.randint(-3, 8),
-            'humidity': 60 + np.random.randint(-20, 20),
-            'temperature': 25 + np.random.randint(-5, 10),
-            'pressure': 1013
+            'wind_speed': round(8 + np.random.randint(-2, 5), 1),  # 6-13 km/h typical
+            'humidity': 55 + np.random.randint(-15, 20),  # 40-75% typical
+            'temperature': round(28 + np.random.randint(-5, 8), 1),  # 23-36°C typical
+            'pressure': 1010 + np.random.randint(-5, 5)
         }
     except Exception as e:
         print(f"Error fetching weather data: {e}")
+        # Fallback: Realistic Delhi weather
         return {
-            'wind_speed': 5 + np.random.randint(-3, 8),
-            'humidity': 60 + np.random.randint(-20, 20),
-            'temperature': 25 + np.random.randint(-5, 10),
-            'pressure': 1013
+            'wind_speed': round(8 + np.random.randint(-2, 5), 1),
+            'humidity': 55 + np.random.randint(-15, 20),
+            'temperature': round(28 + np.random.randint(-5, 8), 1),
+            'pressure': 1010 + np.random.randint(-5, 5)
         }
 
 def estimate_traffic_density(lat, lon):

@@ -131,7 +131,7 @@ class AQIPredictor:
             features['wind_speed'] = wind_speed
             features['humidity'] = humidity
             features['temperature'] = 25  # Default if not available
-            features['pressure'] = 1013  # Default if not available
+            # Note: pressure is not in trained model features, so we don't include it
             
             # Build feature array in correct order
             feature_array = []

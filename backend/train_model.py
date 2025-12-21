@@ -29,8 +29,8 @@ class AQIModelTrainer:
         """Load training data"""
         if not os.path.exists(self.data_path):
             print(f"Data file not found: {self.data_path}")
-            print("Please run data_collector.py first to collect data")
-            return None
+            print("Will generate synthetic training data...")
+            return pd.DataFrame()  # Return empty DataFrame instead of None
         
         df = pd.read_csv(self.data_path)
         print(f"Loaded {len(df)} data points")
@@ -43,8 +43,8 @@ class AQIModelTrainer:
         Target: future_aqi (next hour)
         """
         if df is None or df.empty:
-            print("No data available for training")
-            return None, None
+            print("No data available for training. Generating synthetic data...")
+            return self._generate_synthetic_features()
         
         # Ensure we have required columns
         required_cols = ['timestamp', 'aqi']

@@ -18,7 +18,7 @@ class AQIDataCollector:
         self.data_dir = 'data'
         os.makedirs(self.data_dir, exist_ok=True)
         
-    def fetch_openaq_data(self, lat: float, lon: float, days: int = 30, limit: int = 10000) -> pd.DataFrame:
+    def fetch_openaq_data(self, lat: float, lon: float, days: int = 60, limit: int = 10000) -> pd.DataFrame:
         """
         Fetch historical AQI data from OpenAQ API
         API Documentation: https://openaq.org/#/api

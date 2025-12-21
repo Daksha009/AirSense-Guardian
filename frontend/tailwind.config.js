@@ -3,26 +3,32 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0f4ff',
-          100: '#e0e9ff',
-          200: '#c7d7fe',
-          300: '#a4b8fc',
-          400: '#8190f8',
-          500: '#667eea',
-          600: '#5a67d8',
-          700: '#4c51bf',
-          800: '#434190',
-          900: '#3c366b',
+        bg: {
+          main: '#050806',
+          card: 'rgba(20, 25, 22, 0.6)',
         },
+        brand: {
+          green: '#49a760',
+          accent: '#00ff9d',
+          text: '#ffffff',
+          muted: '#94a3b8',
+          warning: '#eab308',
+          danger: '#ef4444'
+        }
+      },
+      fontFamily: {
+        sans: ['Outfit', 'sans-serif'],
+        display: ['Space Grotesk', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in',
         'slide-up': 'slideUp 0.5s ease-out',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -32,6 +38,10 @@ module.exports = {
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
         },
       },
       backdropBlur: {

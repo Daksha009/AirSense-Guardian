@@ -47,26 +47,57 @@ class ActionEngine:
                 'icon': '⚠️'
             })
         
-        # High AQI overall
+        # High AQI overall - Health Precautions
         if current_aqi > 150:
             actions.append({
-                'type': 'alert_authorities',
-                'title': 'Alert Local Authorities',
-                'description': 'Notify local environmental agencies about high pollution levels for immediate action',
-                'impact': 'Enables regulatory response',
-                'feasibility': 'high',
-                'time_to_impact': '4-6 hours',
-                'icon': '📢'
+                'type': 'health_mask',
+                'title': 'Wear N95/FFP2 Masks',
+                'description': 'For AQI above 150, wear N95 or FFP2 masks when outdoors. Masks reduce PM2.5 exposure by 80-95%. Essential for children, elderly, and those with respiratory conditions.',
+                'impact': '80-95% PM2.5 protection',
+                'feasibility': 'immediate',
+                'time_to_impact': 'immediate',
+                'icon': '😷'
             })
             
             actions.append({
                 'type': 'indoor_air',
                 'title': 'Improve Indoor Air Quality',
-                'description': 'Close windows, use air purifiers, and avoid activities that generate indoor pollution',
+                'description': 'Close windows, use air purifiers with HEPA filters, avoid smoking/cooking that generates smoke. Keep indoor AQI below 50 for safe breathing.',
                 'impact': 'Protects immediate health',
                 'feasibility': 'immediate',
                 'time_to_impact': 'immediate',
                 'icon': '🏠'
+            })
+            
+            actions.append({
+                'type': 'avoid_exercise',
+                'title': 'Avoid Outdoor Exercise',
+                'description': 'High AQI increases breathing rate during exercise, exposing you to 5-10x more pollutants. Exercise indoors or postpone outdoor activities.',
+                'impact': 'Prevents respiratory stress',
+                'feasibility': 'immediate',
+                'time_to_impact': 'immediate',
+                'icon': '🏃'
+            })
+            
+            if current_aqi > 200:
+                actions.append({
+                    'type': 'vulnerable_stay_home',
+                    'title': 'Vulnerable Groups: Stay Indoors',
+                    'description': 'Children, elderly, pregnant women, and those with heart/lung conditions should stay indoors. AQI above 200 is very unhealthy for all.',
+                    'impact': 'Critical health protection',
+                    'feasibility': 'immediate',
+                    'time_to_impact': 'immediate',
+                    'icon': '👶'
+                })
+            
+            actions.append({
+                'type': 'alert_authorities',
+                'title': 'Alert Local Authorities',
+                'description': 'Notify CPCB (Central Pollution Control Board) and local environmental agencies about high pollution levels for immediate action',
+                'impact': 'Enables regulatory response',
+                'feasibility': 'high',
+                'time_to_impact': '4-6 hours',
+                'icon': '📢'
             })
         
         # Industrial contribution
@@ -93,12 +124,24 @@ class ActionEngine:
                 'icon': '🔥'
             })
         
+        # Always add general health precautions for Delhi
+        if current_aqi > 100:
+            actions.append({
+                'type': 'general_precautions',
+                'title': 'General Health Precautions',
+                'description': 'Stay hydrated, eat antioxidant-rich foods (berries, green tea), use saline nasal sprays, and monitor symptoms like coughing or eye irritation.',
+                'impact': 'Supports respiratory health',
+                'feasibility': 'high',
+                'time_to_impact': 'ongoing',
+                'icon': '💊'
+            })
+        
         # If no specific actions, provide general recommendations
         if len(actions) == 0:
             actions.append({
                 'type': 'general',
                 'title': 'Maintain Good Air Quality',
-                'description': 'Current air quality is acceptable. Continue monitoring and follow best practices.',
+                'description': 'Current air quality is acceptable. Continue monitoring and follow best practices. Use public transport, avoid idling vehicles, and support green initiatives.',
                 'impact': 'Preventive',
                 'feasibility': 'high',
                 'time_to_impact': 'ongoing',
