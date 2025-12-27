@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
@@ -24,7 +28,7 @@ const PredictionsChart = ({ predictions }) => {
 
   const peakAQI = chartData.length > 0 ? Math.max(...chartData.map(d => d.aqi)) : 0;
   const minAQI = chartData.length > 0 ? Math.min(...chartData.map(d => d.aqi)) : 0;
-  const trend = chartData.length > 1 
+  const trend = chartData.length > 1
     ? (chartData[chartData.length - 1].aqi > chartData[0].aqi ? 'up' : chartData[chartData.length - 1].aqi < chartData[0].aqi ? 'down' : 'stable')
     : 'stable';
 
@@ -54,25 +58,25 @@ const PredictionsChart = ({ predictions }) => {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="colorAqi" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#667eea" stopOpacity={0.4}/>
-                    <stop offset="95%" stopColor="#667eea" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#667eea" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#667eea" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" opacity={0.5} />
-                <XAxis 
-                  dataKey="time" 
+                <XAxis
+                  dataKey="time"
                   stroke="#666"
                   style={{ fontSize: '0.75rem' }}
                   tick={{ fill: '#666' }}
                 />
-                <YAxis 
+                <YAxis
                   stroke="#666"
                   label={{ value: 'AQI', angle: -90, position: 'insideLeft', style: { fill: '#666' } }}
                   style={{ fontSize: '0.75rem' }}
                   tick={{ fill: '#666' }}
                 />
-                <Tooltip 
-                  contentStyle={{ 
+                <Tooltip
+                  contentStyle={{
                     backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(10px)',
                     border: '1px solid rgba(0, 0, 0, 0.1)',

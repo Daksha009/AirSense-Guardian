@@ -1,3 +1,6 @@
+# Author: Daksha009
+# Repo: https://github.com/Daksha009/AirSense-Guardian.git
+
 """
 Simple HTTP server to serve the frontend HTML file
 """

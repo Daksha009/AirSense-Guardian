@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';

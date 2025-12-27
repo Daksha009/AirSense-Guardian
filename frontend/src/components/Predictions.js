@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React, { useEffect, useRef } from 'react';
 import {
   Chart as ChartJS,
@@ -73,9 +77,9 @@ const Predictions = ({ predictions, aqiData }) => {
   const chartData = {
     labels: predictions && predictions.length > 0
       ? predictions.slice(0, 7).map(p => {
-          const date = new Date(p.time);
-          return date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
-        })
+        const date = new Date(p.time);
+        return date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
+      })
       : ['Now', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM', '12 AM'],
     datasets: [{
       label: 'Predicted AQI',
@@ -125,19 +129,17 @@ const Predictions = ({ predictions, aqiData }) => {
           <h3 className="text-xl font-display font-bold mb-6 flex items-center gap-2">
             <i className="fas fa-heart-pulse text-red-400"></i> Health Alerts
           </h3>
-          
-          <div className={`p-4 mb-6 rounded-r-lg border-l-4 ${
-            health.alert.color === 'red' ? 'bg-red-500/10 border-red-500' :
-            health.alert.color === 'orange' ? 'bg-orange-500/10 border-orange-500' :
-            health.alert.color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500' :
-            'bg-green-500/10 border-green-500'
-          }`}>
-            <h4 className={`font-bold mb-1 ${
-              health.alert.color === 'red' ? 'text-red-500' :
-              health.alert.color === 'orange' ? 'text-orange-500' :
-              health.alert.color === 'yellow' ? 'text-yellow-500' :
-              'text-green-500'
-            }`}>{health.alert.level} Air Quality</h4>
+
+          <div className={`p-4 mb-6 rounded-r-lg border-l-4 ${health.alert.color === 'red' ? 'bg-red-500/10 border-red-500' :
+              health.alert.color === 'orange' ? 'bg-orange-500/10 border-orange-500' :
+                health.alert.color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500' :
+                  'bg-green-500/10 border-green-500'
+            }`}>
+            <h4 className={`font-bold mb-1 ${health.alert.color === 'red' ? 'text-red-500' :
+                health.alert.color === 'orange' ? 'text-orange-500' :
+                  health.alert.color === 'yellow' ? 'text-yellow-500' :
+                    'text-green-500'
+              }`}>{health.alert.level} Air Quality</h4>
             <p className="text-sm text-gray-400">{health.alert.message}</p>
           </div>
 

@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 /**
  * AQI Data Service - Fetches data from OpenAQ, Weather APIs directly
  * No backend required - pure JavaScript
@@ -11,47 +15,47 @@ export async function fetchOpenAQData(lat, lon) {
     // First, find nearby locations
     const locationsUrl = `https://api.openaq.org/v2/locations?coordinates=${lat},${lon}&radius=50000&limit=5&order_by=distance`;
     const locationsResponse = await fetch(locationsUrl);
-    
+
     if (!locationsResponse.ok) {
       throw new Error('Failed to fetch OpenAQ locations');
     }
-    
+
     const locationsData = await locationsResponse.json();
     const locations = locationsData.results || [];
-    
+
     if (locations.length === 0) {
       return generateMockAQIData();
     }
-    
+
     // Get latest measurements from nearest location
     const nearestLocation = locations[0];
     const measurementsUrl = `https://api.openaq.org/v2/locations/${nearestLocation.id}/latest`;
     const measurementsResponse = await fetch(measurementsUrl);
-    
+
     if (!measurementsResponse.ok) {
       return generateMockAQIData();
     }
-    
+
     const measurementsData = await measurementsResponse.json();
     const measurements = measurementsData.results || [];
-    
+
     // Extract AQI values
     let pm25 = 0;
     let pm10 = 0;
     let no2 = 0;
-    
+
     measurements.forEach(meas => {
       const parameter = meas.parameter?.toLowerCase();
       const value = meas.value || 0;
-      
+
       if (parameter === 'pm25') pm25 = value;
       else if (parameter === 'pm10') pm10 = value;
       else if (parameter === 'no2') no2 = value;
     });
-    
+
     // Calculate AQI from PM2.5 and PM10
     const aqi = calculateAQI(pm25, pm10);
-    
+
     return {
       aqi: aqi || generateRandomAQI(),
       pm25: pm25 || generateRandomPM25(),
@@ -76,18 +80,18 @@ export async function fetchWeatherData(lat, lon, apiKey = null) {
       // Use mock data if no API key
       return generateMockWeatherData();
     }
-    
+
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       return generateMockWeatherData();
     }
-    
+
     const data = await response.json();
     const wind = data.wind || {};
     const main = data.main || {};
-    
+
     return {
       wind_speed: (wind.speed || 0) * 3.6, // Convert m/s to km/h
       humidity: main.humidity || 60,
@@ -105,7 +109,7 @@ export async function fetchWeatherData(lat, lon, apiKey = null) {
  */
 export function estimateTrafficDensity(lat, lon) {
   const hour = new Date().getHours();
-  
+
   // Peak hours: 7-9 AM, 5-7 PM
   let baseDensity = 0.3;
   if ((hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19)) {
@@ -113,7 +117,7 @@ export function estimateTrafficDensity(lat, lon) {
   } else if (hour >= 10 && hour <= 16) {
     baseDensity = 0.5;
   }
-  
+
   // Add some randomness
   const density = baseDensity + (Math.random() * 0.2 - 0.1);
   return Math.max(0, Math.min(1, density));
@@ -192,9 +196,9 @@ export async function getCurrentAQIData(lat, lon, weatherApiKey = null) {
     fetchOpenAQData(lat, lon),
     fetchWeatherData(lat, lon, weatherApiKey)
   ]);
-  
+
   const trafficDensity = estimateTrafficDensity(lat, lon);
-  
+
   return {
     current: {
       ...aqiData,

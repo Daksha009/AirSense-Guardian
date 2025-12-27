@@ -1,3 +1,6 @@
+# Author: Daksha009
+# Repo: https://github.com/Daksha009/AirSense-Guardian.git
+
 """
 Data Collection Script for AirSense Guardian
 Fetches real AQI data from OpenAQ, AQICN, and EPA sources

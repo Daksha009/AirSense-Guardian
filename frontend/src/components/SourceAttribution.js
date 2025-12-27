@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React from 'react';
 import { Car, Factory, Flame, Cloud } from 'lucide-react';
 
@@ -61,7 +65,7 @@ const SourceAttribution = ({ sources }) => {
           const config = sourceConfig[key];
           const Icon = config?.icon || Cloud;
           const percentage = value || 0;
-          
+
           return (
             <div
               key={key}
@@ -81,7 +85,7 @@ const SourceAttribution = ({ sources }) => {
                   <div className={`text-2xl font-bold ${config.textColor}`}>{percentage}%</div>
                 </div>
               </div>
-              
+
               {/* Progress Bar */}
               <div className="relative h-3 bg-white rounded-full overflow-hidden shadow-inner">
                 <div

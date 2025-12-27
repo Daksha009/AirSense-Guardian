@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 /**
  * Main service module - exports all services
  * This is the entry point for all backend logic
@@ -16,9 +20,9 @@ export async function getCompleteAQIData(lat, lon, weatherApiKey = null) {
   try {
     // Fetch AQI and weather data
     const { current, weather, traffic_density } = await getCurrentAQIData(lat, lon, weatherApiKey);
-    
+
     const hour = new Date().getHours();
-    
+
     // Get source attribution
     const sources = attributeSources(
       current.aqi,
@@ -26,7 +30,7 @@ export async function getCompleteAQIData(lat, lon, weatherApiKey = null) {
       traffic_density,
       hour
     );
-    
+
     // Get predictions
     const predictions = predictAQI(
       current.aqi,
@@ -36,7 +40,7 @@ export async function getCompleteAQIData(lat, lon, weatherApiKey = null) {
       new Date(),
       3
     );
-    
+
     // Get actionable insights
     const actions = generateActions(
       current.aqi,
@@ -44,10 +48,10 @@ export async function getCompleteAQIData(lat, lon, weatherApiKey = null) {
       weather,
       traffic_density
     );
-    
+
     // Get alerts
     const alerts = getAlerts(current.aqi, predictions);
-    
+
     return {
       current: {
         ...current,
@@ -80,7 +84,7 @@ export async function getLocationAlerts(lat, lon, weatherApiKey = null) {
       new Date(),
       6
     );
-    
+
     return getAlerts(current.aqi, predictions);
   } catch (error) {
     console.error('Error getting alerts:', error);

@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 
@@ -19,15 +23,15 @@ const Hero = () => {
       <div className="globe"></div>
 
       <div className="w-28 h-28 mb-8 animate-float relative z-10" data-aos="zoom-in">
-        <img 
-          src="/logo.png" 
-          alt="AirSight" 
-          className="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(73,167,96,0.6)]" 
+        <img
+          src="/logo.png"
+          alt="AirSight"
+          className="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(73,167,96,0.6)]"
         />
       </div>
 
       <h1 className="font-display text-5xl md:text-8xl font-bold mb-6 leading-tight" data-aos="fade-up">
-        Intelligent <br/><span className="gradient-text">Air Monitoring.</span>
+        Intelligent <br /><span className="gradient-text">Air Monitoring.</span>
       </h1>
       <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10" data-aos="fade-up" data-aos-delay="100">
         Real-time environmental data with AI-powered predictions. <br />The future of clean air starts with better data.

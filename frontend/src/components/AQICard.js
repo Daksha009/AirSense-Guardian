@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React, { useState } from 'react';
 import { MapPin, Wind, Droplets, Thermometer, RefreshCw } from 'lucide-react';
 
@@ -26,7 +30,7 @@ const AQICard = ({ current, weather, location, onLocationChange }) => {
     <div className="glass-strong rounded-3xl p-8 shadow-2xl transform transition-all duration-300 hover:scale-[1.01] relative overflow-hidden">
       {/* Background Gradient Effect */}
       <div className={`absolute inset-0 bg-gradient-to-br ${category.bgGradient} opacity-5 pointer-events-none`}></div>
-      
+
       {/* Header */}
       <div className="relative z-10 flex items-center justify-between mb-6">
         <div>

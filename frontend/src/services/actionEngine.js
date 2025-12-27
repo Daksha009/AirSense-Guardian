@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 /**
  * Action Engine Service
  * Generates actionable insights to reduce pollution
@@ -13,7 +17,7 @@
  */
 export function generateActions(currentAQI, sources, weatherData, trafficDensity) {
   const actions = [];
-  
+
   // High traffic contribution
   if (sources.traffic > 40) {
     actions.push({
@@ -25,7 +29,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       time_to_impact: '2-3 hours',
       icon: '🚗'
     });
-    
+
     actions.push({
       type: 'public_transport',
       title: 'Use Public Transport',
@@ -36,7 +40,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       icon: '🚌'
     });
   }
-  
+
   // Low wind conditions
   if (weatherData.wind_speed < 5) {
     actions.push({
@@ -49,7 +53,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       icon: '⚠️'
     });
   }
-  
+
   // High AQI overall
   if (currentAQI > 150) {
     actions.push({
@@ -61,7 +65,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       time_to_impact: '4-6 hours',
       icon: '📢'
     });
-    
+
     actions.push({
       type: 'indoor_air',
       title: 'Improve Indoor Air Quality',
@@ -72,7 +76,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       icon: '🏠'
     });
   }
-  
+
   // Industrial contribution
   if (sources.industry > 30) {
     actions.push({
@@ -85,7 +89,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       icon: '🏭'
     });
   }
-  
+
   // Open burning contribution
   if (sources.open_burning > 20) {
     actions.push({
@@ -98,7 +102,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       icon: '🔥'
     });
   }
-  
+
   // If no specific actions, provide general recommendations
   if (actions.length === 0) {
     actions.push({
@@ -111,7 +115,7 @@ export function generateActions(currentAQI, sources, weatherData, trafficDensity
       icon: '✅'
     });
   }
-  
+
   return actions;
 }
 
@@ -125,7 +129,7 @@ export function calculateActionImpact(actionType, sources) {
     stop_burning: sources.open_burning * 0.2,
     report_industry: sources.industry * 0.1
   };
-  
+
   return impactMap[actionType] || 0;
 }
 

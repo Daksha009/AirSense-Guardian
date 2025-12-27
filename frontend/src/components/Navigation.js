@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React from 'react';
 
 const Navigation = () => {
@@ -10,7 +14,7 @@ const Navigation = () => {
           </div>
           <span className="font-display font-bold text-2xl tracking-wide text-white">AirSight</span>
         </div>
-        
+
         <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
           <a href="#dashboard" className="hover:text-brand-accent transition-colors">Dashboard</a>
           <a href="#predictions" className="hover:text-brand-accent transition-colors">Forecast</a>

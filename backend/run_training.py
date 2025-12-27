@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Author: Daksha009
+# Repo: https://github.com/Daksha009/AirSense-Guardian.git
+
 """
 Complete Training Pipeline Runner
 Collects data and trains the model

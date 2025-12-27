@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React from 'react';
 import { Lightbulb, Clock, TrendingDown, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 
@@ -50,7 +54,7 @@ const ActionCards = ({ actions }) => {
         </div>
         <p className="text-sm text-gray-600 ml-12">Take action to improve air quality in your area</p>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {actions.map((action, index) => (
           <div
@@ -59,7 +63,7 @@ const ActionCards = ({ actions }) => {
           >
             {/* Background Gradient on Hover */}
             <div className={`absolute inset-0 bg-gradient-to-br ${getFeasibilityColor(action.feasibility)} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
-            
+
             <div className="relative z-10">
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
@@ -70,10 +74,10 @@ const ActionCards = ({ actions }) => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Description */}
               <p className="text-sm text-gray-600 mb-4 leading-relaxed">{action.description}</p>
-              
+
               {/* Meta Information */}
               <div className="space-y-3">
                 {/* Impact */}

@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React, { useState } from 'react';
 import './App.css';
 import PollutantCanvas from './components/PollutantCanvas';

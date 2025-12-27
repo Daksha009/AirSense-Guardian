@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 
@@ -178,21 +182,19 @@ const Dashboard = ({ onDataUpdate }) => {
             <div className="flex gap-2 justify-center">
               <button
                 onClick={() => setSearchType('city')}
-                className={`px-4 py-2 font-bold rounded-lg transition-colors ${
-                  searchType === 'city'
+                className={`px-4 py-2 font-bold rounded-lg transition-colors ${searchType === 'city'
                     ? 'bg-brand-green text-white hover:bg-[#3d8b50]'
                     : 'glass-card hover:bg-white/10 font-medium text-white'
-                }`}
+                  }`}
               >
                 <i className="fas fa-city mr-2"></i>City
               </button>
               <button
                 onClick={() => setSearchType('state')}
-                className={`px-4 py-2 font-bold rounded-lg transition-colors ${
-                  searchType === 'state'
+                className={`px-4 py-2 font-bold rounded-lg transition-colors ${searchType === 'state'
                     ? 'bg-brand-green text-white hover:bg-[#3d8b50]'
                     : 'glass-card hover:bg-white/10 font-medium text-white'
-                }`}
+                  }`}
               >
                 <i className="fas fa-map mr-2"></i>State
               </button>
@@ -236,7 +238,7 @@ const Dashboard = ({ onDataUpdate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <div className="lg:col-span-2 glass-card p-10 relative overflow-hidden group" data-aos="fade-right">
             <div className="absolute right-[-20px] top-[-20px] w-64 h-64 bg-brand-green/10 blur-[80px] rounded-full group-hover:bg-brand-green/20 transition-all"></div>
-            
+
             <div className="flex justify-between items-start mb-8">
               <div>
                 <h2 id="cityName" className="text-4xl font-display font-bold mb-1">{cityName}</h2>
@@ -244,12 +246,11 @@ const Dashboard = ({ onDataUpdate }) => {
                   <span className="w-2 h-2 bg-brand-accent rounded-full animate-pulse"></span> Live Sensors
                 </p>
               </div>
-              <div className={`px-5 py-2 rounded-lg font-bold text-sm tracking-wider uppercase ${
-                status.color === 'red' ? 'bg-red-500/10 border border-red-500/40 text-red-400' :
-                status.color === 'orange' ? 'bg-orange-500/10 border border-orange-500/40 text-orange-400' :
-                status.color === 'yellow' ? 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-400' :
-                'bg-green-500/10 border border-green-500/40 text-green-400'
-              }`}>
+              <div className={`px-5 py-2 rounded-lg font-bold text-sm tracking-wider uppercase ${status.color === 'red' ? 'bg-red-500/10 border border-red-500/40 text-red-400' :
+                  status.color === 'orange' ? 'bg-orange-500/10 border border-orange-500/40 text-orange-400' :
+                    status.color === 'yellow' ? 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-400' :
+                      'bg-green-500/10 border border-green-500/40 text-green-400'
+                }`}>
                 {status.text}
               </div>
             </div>

@@ -1,3 +1,7 @@
+/*
+ * Author: Daksha009
+ * Repo: https://github.com/Daksha009/AirSense-Guardian.git
+ */
 import React from 'react';
 import { AlertTriangle, CheckCircle, Clock, Activity } from 'lucide-react';
 
@@ -67,7 +71,7 @@ const AlertsPanel = ({ alerts = [] }) => {
           {alerts.map((alert, index) => {
             const config = getSeverityConfig(alert.severity);
             const Icon = config.icon;
-            
+
             return (
               <div
                 key={index}
@@ -78,7 +82,7 @@ const AlertsPanel = ({ alerts = [] }) => {
                   <div className={`${config.iconBg} p-3 rounded-xl flex-shrink-0`}>
                     <Icon className={`w-6 h-6 ${config.iconColor}`} />
                   </div>
-                  
+
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-2">
@@ -97,9 +101,9 @@ const AlertsPanel = ({ alerts = [] }) => {
                         <span>{new Date(alert.timestamp).toLocaleTimeString()}</span>
                       </div>
                     </div>
-                    
+
                     <p className="text-gray-800 font-medium mb-3 leading-relaxed">{alert.message}</p>
-                    
+
                     <div className="flex items-center space-x-4 text-xs">
                       <div className="flex items-center space-x-1 text-gray-600">
                         <Activity className="w-3 h-3" />
