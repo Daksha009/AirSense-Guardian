@@ -221,7 +221,7 @@ Get pollution alerts and warnings
 
 ## 📄 License
 
-This project is created for the Jaipuria Hack hackathon.
+This project is created for the Jaipuria Hack by owner of this repo - Daksha009
 
 ---
 
