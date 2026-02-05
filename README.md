@@ -6,9 +6,9 @@
 ![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)
 
-<<<<<<< HEAD
+
 AirSense Guardian is a community-driven air quality intelligence system. It doesn't just show you the air quality index (AQI)—it identifies **pollution sources** and suggests **high-impact actions** to help you breathe easier.
-=======
+
 ## 🎯 Core Features
 
 ### 1. **Hyperlocal AQI Monitoring**
