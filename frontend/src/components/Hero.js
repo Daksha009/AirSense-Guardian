@@ -3,6 +3,7 @@
  * Repo: https://github.com/Daksha009/AirSense-Guardian.git
  */
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AOS from 'aos';
 
 const Hero = () => {
@@ -25,7 +26,7 @@ const Hero = () => {
       <div className="w-28 h-28 mb-8 animate-float relative z-10" data-aos="zoom-in">
         <img
           src="/logo.png"
-          alt="AirSight"
+          alt="AirSense-G"
           className="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(73,167,96,0.6)]"
         />
       </div>
@@ -44,6 +45,14 @@ const Hero = () => {
         >
           Check My City
         </button>
+
+        <Link
+          to="/lung-simulator"
+          className="px-8 py-4 bg-gradient-to-r from-pink-500 to-red-600 text-white font-bold rounded-xl hover:from-pink-600 hover:to-red-700 transition-all shadow-xl flex items-center justify-center gap-2"
+        >
+          <span className="text-xl">🫁</span> Try Lung Simulator
+        </Link>
+
         <button
           onClick={scrollToFuture}
           className="px-8 py-4 glass-card hover:bg-white/10 font-medium text-white transition-all"

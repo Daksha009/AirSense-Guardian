@@ -10,9 +10,9 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg overflow-hidden border border-brand-green/50 shadow-[0_0_15px_rgba(73,167,96,0.5)] bg-black flex items-center justify-center">
-            <img src="/logo.png" alt="AirSight" className="w-full h-full object-cover" />
+            <img src="/logo.png" alt="AirSense-G" className="w-full h-full object-cover" />
           </div>
-          <span className="font-display font-bold text-2xl tracking-wide text-white">AirSight</span>
+          <span className="font-display font-bold text-2xl tracking-wide text-white">AirSense-G</span>
         </div>
 
         <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">

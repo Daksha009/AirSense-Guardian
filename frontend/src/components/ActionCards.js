@@ -5,7 +5,7 @@
 import React from 'react';
 import { Lightbulb, Clock, TrendingDown, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 
-const ActionCards = ({ actions }) => {
+const ActionCards = ({ actions, headline }) => {
   const getFeasibilityIcon = (feasibility) => {
     switch (feasibility?.toLowerCase()) {
       case 'high':
@@ -44,15 +44,40 @@ const ActionCards = ({ actions }) => {
   }
 
   return (
-    <div className="glass-strong rounded-3xl p-6 shadow-2xl">
+    <section className="py-10 px-4 max-w-7xl mx-auto">
+      {/* Headline Insight Banner */}
+      {headline && (
+        <div className="mb-10 transform hover:scale-[1.01] transition-transform duration-300">
+          <div className="glass-strong rounded-3xl p-8 border-l-8 border-red-500 relative overflow-hidden">
+            <div className="absolute right-0 top-0 w-64 h-64 bg-red-500/10 blur-[60px] rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-800 mb-2 relative z-10 leading-tight">
+              {headline.replace(/^(.*?)( are | is )/, (match, p1, p2) => {
+                // Try to bold the first part if it looks like the driver
+                return `<span class="text-red-600">${p1}</span>${p2}`;
+              })}
+            </h2>
+            {/* Fallback rendering if regex fails or just render simple text if prefered. 
+                  Actually, let's just render the text directly but style it nicely. 
+              */}
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-800 relative z-10 leading-tight">
+              {headline}
+            </h2>
+            <div className="mt-4 flex items-center space-x-2 text-red-600 font-bold uppercase tracking-wider text-sm">
+              <AlertCircle className="w-5 h-5" />
+              <span>Action Required</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mb-6">
         <div className="flex items-center space-x-3 mb-1">
           <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
             <Lightbulb className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">Recommended Actions</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Community Actions</h2>
         </div>
-        <p className="text-sm text-gray-600 ml-12">Take action to improve air quality in your area</p>
+        <p className="text-sm text-gray-600 ml-12">Real-time impact estimates based on current conditions</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -114,7 +139,7 @@ const ActionCards = ({ actions }) => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

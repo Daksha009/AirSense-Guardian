@@ -4,14 +4,10 @@
  */
 import React, { useState } from 'react';
 import './App.css';
-import PollutantCanvas from './components/PollutantCanvas';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import Dashboard from './components/Dashboard';
-import Predictions from './components/Predictions';
-import LiveMap from './components/LiveMap';
-import FutureScope from './components/FutureScope';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import LungSimulatorPage from './pages/LungSimulatorPage';
+import LiquidEther from './components/LiquidEther';
 
 function App() {
   const [aqiData, setAqiData] = useState(null);
@@ -21,16 +17,43 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen relative">
-      <PollutantCanvas />
-      <Navigation />
-      <Hero />
-      <Dashboard onDataUpdate={handleDataUpdate} />
-      <Predictions predictions={aqiData?.predictions || []} aqiData={aqiData} />
-      <LiveMap />
-      <FutureScope />
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen relative">
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -2 }}>
+          <LiquidEther
+            colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+            mouseForce={20}
+            cursorSize={100}
+            isViscous
+            viscous={30}
+            iterationsViscous={32}
+            iterationsPoisson={32}
+            resolution={0.5}
+            isBounce={false}
+            autoDemo
+            autoSpeed={0.5}
+            autoIntensity={2.2}
+            takeoverDuration={0.25}
+            autoResumeDelay={3000}
+            autoRampDuration={0.6}
+            color0="#5227FF"
+            color1="#FF9FFC"
+            color2="#B19EEF"
+          />
+        </div>
+
+        <Routes>
+          <Route
+            path="/"
+            element={<Home aqiData={aqiData} handleDataUpdate={handleDataUpdate} />}
+          />
+          <Route
+            path="/lung-simulator"
+            element={<LungSimulatorPage />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

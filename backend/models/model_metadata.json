@@ -14,18 +14,18 @@
     "humidity",
     "temperature"
   ],
-  "training_date": "2025-12-20T12:27:57.698587",
+  "training_date": "2026-02-04T22:03:04.061757",
   "metrics": {
-    "mse": 111.4756245882929,
-    "mae": 8.390484132918493,
-    "rmse": 10.558201768686413,
-    "r2": 0.7334086108122989,
-    "mape": 8.823911481153544
+    "mse": 112.03987889258057,
+    "mae": 8.328154814315917,
+    "rmse": 10.584889177151576,
+    "r2": 0.8794608785342678,
+    "mape": 36039266.88584582
   },
   "best_params": {
-    "max_depth": 8,
+    "max_depth": 15,
     "min_samples_leaf": 4,
-    "min_samples_split": 10,
+    "min_samples_split": 2,
     "n_estimators": 200
   }
 }

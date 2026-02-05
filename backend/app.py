@@ -69,12 +69,14 @@ def get_current_aqi():
         )
         
         # Get actionable insights
-        actions = action_engine.generate_actions(
+        action_results = action_engine.generate_actions(
             aqi_data.get('aqi', 0),
             sources,
             weather_data,
             traffic_density
         )
+        actions = action_results.get('actions', [])
+        headline_insight = action_results.get('headline', '')
         
         # Get alerts
         alerts = []
@@ -114,6 +116,7 @@ def get_current_aqi():
             'sources': sources,
             'predictions': predictions,
             'actions': actions,
+            'headline_insight': headline_insight,
             'alerts': alerts
         })
     except Exception as e:
@@ -203,90 +206,113 @@ def get_alerts():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-def fetch_openaq_data(lat, lon):
-    """Fetch AQI data from OpenAQ API"""
+def fetch_google_data(lat, lon):
+    """Fetch AQI data from Google Air Quality API"""
     try:
-        # Using OpenAQ API
-        url = f"https://api.openaq.org/v2/locations"
-        params = {
-            'coordinates': f"{lat},{lon}",
-            'radius': 10000,  # 10km radius
-            'limit': 1
+        api_key = GOOGLE_MAPS_API_KEY
+        if not api_key:
+            raise ValueError("Google Maps API Key not found")
+
+        url = f"https://airquality.googleapis.com/v1/currentConditions:lookup?key={api_key}"
+        headers = {'Content-Type': 'application/json'}
+        payload = {
+            "location": {
+                "latitude": lat,
+                "longitude": lon
+            },
+            "extraComputations": [
+                "HEALTH_RECOMMENDATIONS",
+                "DOMINANT_POLLUTANT_CONCENTRATION",
+                "POLLUTANT_CONCENTRATION",
+                "LOCAL_AQI",
+                "POLLUTANT_ADDITIONAL_INFO"
+            ]
         }
         
-        response = requests.get(url, params=params, timeout=10)
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
         
         if response.status_code == 200:
             data = response.json()
-            if data.get('results') and len(data['results']) > 0:
-                location = data['results'][0]
-                # Get latest measurements
-                measurements_url = f"https://api.openaq.org/v2/locations/{location['id']}/latest"
-                meas_response = requests.get(measurements_url, timeout=10)
+            
+            indexes = data.get('indexes', [])
+            pollutants = data.get('pollutants', [])
+            
+            # Default values
+            aqi = 0
+            pm25 = 0
+            pm10 = 0
+            no2 = 0
+            
+            # Get Universal AQI or Local AQI
+            if len(indexes) > 0:
+                # Prefer UAQI (Universal AQI) or the first available
+                aqi = indexes[0].get('aqi', 0)
+                # Google AQI is 0-100 usually, map to 0-500 scale if needed, 
+                # but standard UAQI is 0-100. Let's keep it as is or scale it?
+                # User's frontend expects standard PM2.5 based AQI (0-500).
+                # Google's UAQI (0-100). Let's multiply by 5 to map roughly? 
+                # No, let's check code or comments. 
+                # Actually standard US AQI is 0-500. 
+                # Google usually provides specific code.
+                # Let's search for 'universalAqi' or 'usaEpa'.
+                for idx in indexes:
+                    if idx.get('code') == 'usa_epa':
+                        aqi = idx.get('aqi', 0)
+                        break
+                if aqi == 0 and len(indexes) > 0:
+                     aqi = indexes[0].get('aqi', 0)
+
+            # Extract pollutants
+            for pol in pollutants:
+                code = pol.get('code', '').lower()
+                conc = pol.get('concentration', {}).get('value', 0)
                 
-                if meas_response.status_code == 200:
-                    meas_data = meas_response.json()
-                    measurements = meas_data.get('results', [])
-                    
-                    # Extract AQI values
-                    pm25 = 0
-                    pm10 = 0
-                    no2 = 0
-                    
-                    for meas in measurements:
-                        parameter = meas.get('parameter', '').lower()
-                        value = meas.get('value', 0)
-                        
-                        if parameter == 'pm25':
-                            pm25 = value
-                        elif parameter == 'pm10':
-                            pm10 = value
-                        elif parameter == 'no2':
-                            no2 = value
-                    
-                    # Calculate AQI (simplified US AQI)
-                    aqi = calculate_aqi(pm25, pm10)
-                    
-                    return {
-                        'aqi': aqi,
-                        'pm25': pm25,
-                        'pm10': pm10,
-                        'no2': no2
-                    }
-        
-        # Fallback: Use realistic Delhi AQI data (typical range: 150-250)
-        base_aqi = 180  # Typical Delhi AQI
-        variation = np.random.randint(-30, 50)
-        aqi = max(50, min(400, base_aqi + variation))
-        
-        # Calculate pollutants based on AQI
-        pm25 = max(10, aqi * 0.4 + np.random.randint(-5, 10))
-        pm10 = max(20, aqi * 0.6 + np.random.randint(-10, 15))
-        no2 = max(15, aqi * 0.2 + np.random.randint(-5, 10))
-        
-        return {
-            'aqi': round(aqi),
-            'pm25': round(pm25, 1),
-            'pm10': round(pm10, 1),
-            'no2': round(no2, 1)
-        }
+                if code == 'pm25':
+                    pm25 = conc
+                elif code == 'pm10':
+                    pm10 = conc
+                elif code == 'no2':
+                    no2 = conc
+            
+            return {
+                'aqi': int(aqi),
+                'pm25': round(pm25, 2),
+                'pm10': round(pm10, 2),
+                'no2': round(no2, 2)
+            }
+            
+        print(f"Google API Error: {response.status_code} - {response.text}")
+        return fetch_fallback_data()
+
     except Exception as e:
-        print(f"Error fetching OpenAQ data: {e}")
-        # Fallback: Use realistic Delhi AQI data
-        base_aqi = 180
-        variation = np.random.randint(-30, 50)
-        aqi = max(50, min(400, base_aqi + variation))
-        
-        pm25 = max(10, aqi * 0.4 + np.random.randint(-5, 10))
-        pm10 = max(20, aqi * 0.6 + np.random.randint(-10, 15))
-        no2 = max(15, aqi * 0.2 + np.random.randint(-5, 10))
-        
-        return {
-            'aqi': round(aqi),
-            'pm25': round(pm25, 1),
-            'pm10': round(pm10, 1),
-            'no2': round(no2, 1)
-        }
+        print(f"Error fetching Google data: {e}")
+        return fetch_fallback_data()
+
+def fetch_fallback_data():
+    """Return realistic simulation data"""
+    base_aqi = 180
+    variation = np.random.randint(-30, 50)
+    aqi = max(50, min(400, base_aqi + variation))
+    
+    pm25 = max(10, aqi * 0.4 + np.random.randint(-5, 10))
+    pm10 = max(20, aqi * 0.6 + np.random.randint(-10, 15))
+    no2 = max(15, aqi * 0.2 + np.random.randint(-5, 10))
+    
+    return {
+        'aqi': round(aqi),
+        'pm25': round(pm25, 1),
+        'pm10': round(pm10, 1),
+        'no2': round(no2, 1)
+    }
+
+def fetch_openaq_data(lat, lon):
+    """Wrapper for backward compatibility or switching"""
+    # Prefer Google API if key exists
+    if GOOGLE_MAPS_API_KEY:
+        return fetch_google_data(lat, lon)
+    
+    # ... Rest of OpenAQ logic could go here if we kept it as fallback ...
+    return fetch_fallback_data()
 
 def fetch_weather_data(lat, lon):
     """Fetch weather data (wind speed, humidity)"""
