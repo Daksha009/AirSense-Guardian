@@ -226,7 +226,7 @@ Get pollution alerts and warnings
 
 ## 📄 License
 
-This project is created for the Jaipuria Hack by owner of this repo - Daksha009
+This project is created for the India innovates hackathon 2026
 >>>>>>> 8e913e3f6e6f6ce24e36f2925b51ef3d98f3ec1c
 
 ---
