@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import LungSimulatorPage from './pages/LungSimulatorPage';
 import LiquidEther from './components/LiquidEther';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [aqiData, setAqiData] = useState(null);
@@ -52,6 +53,7 @@ function App() {
             element={<LungSimulatorPage />}
           />
         </Routes>
+        <Chatbot />
       </div>
     </Router>
   );

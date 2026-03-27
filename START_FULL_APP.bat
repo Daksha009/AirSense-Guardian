@@ -15,12 +15,12 @@ echo ============================================================
 echo.
 echo Starting Backend Server (Port 5000)...
 echo.
-start "AirSense Guardian Backend" cmd /k "cd /d %~dp0backend && python app.py"
+start "AirSense Guardian Backend" cmd /k "cd /d %~dp0 && IF EXIST .venv\Scripts\activate.bat (call .venv\Scripts\activate.bat) && cd backend && python app.py"
 timeout /t 5 /nobreak >nul
 echo.
 echo Starting Frontend Server (Port 3000)...
 echo.
-start "AirSense Guardian Frontend" cmd /k "cd /d %~dp0frontend && python server.py"
+start "AirSense Guardian Frontend" cmd /k "cd /d %~dp0 && IF EXIST .venv\Scripts\activate.bat (call .venv\Scripts\activate.bat) && cd frontend && python server.py"
 echo.
 echo ============================================================
 echo.
