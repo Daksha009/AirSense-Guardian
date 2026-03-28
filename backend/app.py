@@ -274,15 +274,15 @@ def chat_endpoint():
         if not weather_data:
             weather_data = fetch_weather_data(lat, lon)
         
-        api_key = os.getenv('OPENAI_API_KEY')
-        if not api_key or api_key == 'YOUR_API_KEY_HERE':
+        gemini_api_key = os.getenv('GEMINI_API_KEY')
+        openai_api_key = os.getenv('OPENAI_API_KEY')
+        
+        if not gemini_api_key and (not openai_api_key or openai_api_key == 'YOUR_API_KEY_HERE'):
             return jsonify({
                 "role": "assistant",
-                "content": "I am the AirSense-G Assistant! My AI capabilities are currently disabled (missing OPENAI_API_KEY in backend/.env). Please add your API key to talk to me!"
+                "content": "I am the AirSense-G Assistant! My AI capabilities are currently disabled (missing OPENAI_API_KEY or GEMINI_API_KEY in backend/.env). Please add your API key to talk to me!"
             })
             
-        client = openai.OpenAI(api_key=api_key)
-        
         system_prompt = f"""
 You are AirSense-G Assistant. Be concise and scientific.
 City: {city} | Source: {data_source}
@@ -296,20 +296,29 @@ Rules:
 - Always mention this is AI-generated advice, not medical fact.
 - Do NOT write long paragraphs. Use bullet points only.
 """
-
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message}
-        ]
         
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            temperature=0.7,
-            max_tokens=600
-        )
-        
-        reply = response.choices[0].message.content
+        # Prefer Gemini if key is provided and valid, otherwise fallback to OpenAI
+        if gemini_api_key:
+            import google.generativeai as genai
+            genai.configure(api_key=gemini_api_key)
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            full_prompt = system_prompt + f"\n\nUser: {user_message}\nAssistant:"
+            response = model.generate_content(full_prompt)
+            reply = response.text
+        else:
+            client = openai.OpenAI(api_key=openai_api_key)
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ]
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=messages,
+                temperature=0.7,
+                max_tokens=600
+            )
+            reply = response.choices[0].message.content
+            
         return jsonify({"role": "assistant", "content": reply})
         
     except Exception as e:

@@ -50,18 +50,12 @@ const ActionCards = ({ actions, headline }) => {
         <div className="mb-10 transform hover:scale-[1.01] transition-transform duration-300">
           <div className="glass-strong rounded-3xl p-8 border-l-8 border-red-500 relative overflow-hidden">
             <div className="absolute right-0 top-0 w-64 h-64 bg-red-500/10 blur-[60px] rounded-full"></div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-800 mb-2 relative z-10 leading-tight">
-              {headline.replace(/^(.*?)( are | is )/, (match, p1, p2) => {
-                // Try to bold the first part if it looks like the driver
-                return `<span class="text-red-600">${p1}</span>${p2}`;
-              })}
-            </h2>
-            {/* Fallback rendering if regex fails or just render simple text if prefered. 
-                  Actually, let's just render the text directly but style it nicely. 
-              */}
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-800 relative z-10 leading-tight">
-              {headline}
-            </h2>
+            <h2 
+              className="text-3xl md:text-4xl font-display font-bold text-gray-200 mb-2 relative z-10 leading-tight"
+              dangerouslySetInnerHTML={{ 
+                __html: headline.replace(/^(.*?)( are | is )/, '<span class="text-red-500 font-bold">$1</span>$2') 
+              }}
+            />
             <div className="mt-4 flex items-center space-x-2 text-red-600 font-bold uppercase tracking-wider text-sm">
               <AlertCircle className="w-5 h-5" />
               <span>Action Required</span>

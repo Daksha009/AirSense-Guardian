@@ -59,9 +59,9 @@
     </script>
     <style>
         body {
-            background-color: #050806;
-            background-image: radial-gradient(circle at 50% 0%, #11241a 0%, #050806 80%);
-            color: #ffffff;
+            background-color: #f8fafc;
+            background-image: radial-gradient(circle at 50% 0%, #ecfdf5 0%, #ffffff 80%);
+            color: #0F172A;
             overflow-x: hidden;
         }
 
@@ -75,12 +75,12 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 20px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
         
@@ -123,19 +123,19 @@
 
     <canvas id="pollutant-canvas"></canvas>
 
-    <nav class="fixed w-full z-50 py-4 backdrop-blur-md bg-[#050806]/70 border-b border-white/5">
+    <nav class="fixed w-full z-50 py-4 backdrop-blur-md bg-white/70 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg overflow-hidden border border-brand-green/50 shadow-[0_0_15px_rgba(73,167,96,0.5)] bg-black flex items-center justify-center">
+                <div class="w-10 h-10 rounded-lg overflow-hidden border border-brand-green/50 shadow-[0_0_15px_rgba(73,167,96,0.5)] bg-white flex items-center justify-center">
                      <img src="logo.png" alt="AirSight" class="w-full h-full object-cover">
                 </div>
-                <span class="font-display font-bold text-2xl tracking-wide text-white">AirSight</span>
+                <span class="font-display font-bold text-2xl tracking-wide text-gray-900">AirSight</span>
             </div>
             
-            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
                 <a href="#dashboard" class="hover:text-brand-accent transition-colors">Dashboard</a>
                 <a href="#predictions" class="hover:text-brand-accent transition-colors">Forecast</a>
-                <a href="#future-scope" class="text-brand-accent hover:text-white transition-colors border border-brand-green/30 px-3 py-1 rounded-full bg-brand-green/10">
+                <a href="#future-scope" class="text-brand-accent hover:text-gray-900 transition-colors border border-brand-green/20 px-3 py-1 rounded-full bg-brand-green/10">
                     <i class="fas fa-microchip mr-1"></i> Future Tech
                 </a>
             </div>
@@ -152,7 +152,7 @@
         <h1 class="font-display text-5xl md:text-8xl font-bold mb-6 leading-tight" data-aos="fade-up">
             Intelligent <br/><span class="gradient-text">Air Monitoring.</span>
         </h1>
-        <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-10" data-aos="fade-up" data-aos-delay="100">
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10" data-aos="fade-up" data-aos-delay="100">
             Real-time environmental data with AI-powered predictions. <br>The future of clean air starts with better data.
         </p>
 
@@ -160,7 +160,7 @@
             <button onclick="document.getElementById('dashboard').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 bg-brand-green text-white font-bold rounded-xl hover:bg-[#3d8b50] transition-all shadow-[0_0_25px_rgba(73,167,96,0.4)]">
                 Check My City
             </button>
-            <button onclick="document.getElementById('future-scope').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 glass-card hover:bg-white/10 font-medium text-white transition-all">
+            <button onclick="document.getElementById('future-scope').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 glass-card hover:bg-gray-100 border-gray-200 font-medium text-gray-900 transition-all">
                 Our Solution
             </button>
         </div>
@@ -176,16 +176,16 @@
                         <button id="searchTypeCity" onclick="setSearchType('city')" class="px-4 py-2 bg-brand-green text-white font-bold rounded-lg hover:bg-[#3d8b50] transition-colors">
                             <i class="fas fa-city mr-2"></i>City
                         </button>
-                        <button id="searchTypeState" onclick="setSearchType('state')" class="px-4 py-2 glass-card hover:bg-white/10 font-medium text-white transition-colors">
+                        <button id="searchTypeState" onclick="setSearchType('state')" class="px-4 py-2 glass-card hover:bg-gray-100 border-gray-200 font-medium text-gray-900 transition-colors">
                             <i class="fas fa-map mr-2"></i>State
                         </button>
                     </div>
                     
                     <!-- Search Bar -->
-                    <div class="flex items-center bg-[#0e110f] border border-brand-green/30 rounded-2xl p-2 shadow-[0_0_30px_rgba(73,167,96,0.1)]">
+                    <div class="flex items-center bg-white border border-brand-green/20 rounded-2xl p-2 shadow-[0_0_30px_rgba(73,167,96,0.1)]">
                         <i class="fas fa-search text-brand-green ml-4 text-xl"></i>
                         <input type="text" id="searchInput" placeholder="Enter City Name (e.g. Delhi, Mumbai)" 
-                               class="w-full bg-transparent border-none text-white text-lg px-4 py-3 focus:ring-0 placeholder-gray-500 outline-none">
+                               class="w-full bg-transparent border-none text-gray-900 text-lg px-4 py-3 focus:ring-0 placeholder-gray-500 outline-none">
                         <button onclick="handleSearch()" class="bg-brand-green text-white font-bold px-6 py-3 rounded-xl hover:bg-[#3d8b50] transition-colors">
                             Analyze
                         </button>
@@ -193,16 +193,16 @@
                     
                     <!-- Quick State Selector -->
                     <div id="stateSelector" class="hidden flex-wrap gap-2 justify-center">
-                        <button onclick="selectState('Delhi')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Delhi</button>
-                        <button onclick="selectState('Maharashtra')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Maharashtra</button>
-                        <button onclick="selectState('Karnataka')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Karnataka</button>
-                        <button onclick="selectState('West Bengal')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">West Bengal</button>
-                        <button onclick="selectState('Tamil Nadu')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Tamil Nadu</button>
-                        <button onclick="selectState('Telangana')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Telangana</button>
-                        <button onclick="selectState('Gujarat')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Gujarat</button>
-                        <button onclick="selectState('Rajasthan')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Rajasthan</button>
-                        <button onclick="selectState('Uttar Pradesh')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Uttar Pradesh</button>
-                        <button onclick="selectState('Punjab')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-300 rounded-lg transition-colors">Punjab</button>
+                        <button onclick="selectState('Delhi')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Delhi</button>
+                        <button onclick="selectState('Maharashtra')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Maharashtra</button>
+                        <button onclick="selectState('Karnataka')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Karnataka</button>
+                        <button onclick="selectState('West Bengal')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">West Bengal</button>
+                        <button onclick="selectState('Tamil Nadu')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Tamil Nadu</button>
+                        <button onclick="selectState('Telangana')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Telangana</button>
+                        <button onclick="selectState('Gujarat')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Gujarat</button>
+                        <button onclick="selectState('Rajasthan')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Rajasthan</button>
+                        <button onclick="selectState('Uttar Pradesh')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Uttar Pradesh</button>
+                        <button onclick="selectState('Punjab')" class="px-3 py-1 glass-card hover:bg-brand-green/20 text-sm text-gray-700 rounded-lg transition-colors">Punjab</button>
                     </div>
                 </div>
             </div>
@@ -224,33 +224,33 @@
                     </div>
 
                     <div class="flex items-baseline gap-4 mb-4">
-                        <span id="aqiValue" class="text-9xl font-display font-bold text-white tracking-tighter leading-none">134</span>
+                        <span id="aqiValue" class="text-9xl font-display font-bold text-gray-900 tracking-tighter leading-none">134</span>
                         <div class="flex flex-col">
-                            <span class="text-xl text-gray-400">AQI</span>
+                            <span class="text-xl text-gray-600">AQI</span>
                             <span class="text-xs text-gray-500">PM2.5 Dominant</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-col gap-4">
-                    <div class="glass-card p-6 flex items-center justify-between hover:bg-white/5 transition-colors" data-aos="fade-left" data-aos-delay="100">
+                    <div class="glass-card p-6 flex items-center justify-between hover:bg-white shadow-sm border-gray-100 transition-colors" data-aos="fade-left" data-aos-delay="100">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400"><i class="fas fa-wind"></i></div>
-                            <span class="text-gray-300">PM2.5</span>
+                            <span class="text-gray-700">PM2.5</span>
                         </div>
                         <span class="font-bold text-2xl" data-pollutant="pm25">45</span>
                     </div>
-                    <div class="glass-card p-6 flex items-center justify-between hover:bg-white/5 transition-colors" data-aos="fade-left" data-aos-delay="200">
+                    <div class="glass-card p-6 flex items-center justify-between hover:bg-white shadow-sm border-gray-100 transition-colors" data-aos="fade-left" data-aos-delay="200">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-purple-500/10 rounded-lg text-purple-400"><i class="fas fa-smog"></i></div>
-                            <span class="text-gray-300">PM10</span>
+                            <span class="text-gray-700">PM10</span>
                         </div>
                         <span class="font-bold text-2xl" data-pollutant="pm10">82</span>
                     </div>
-                    <div class="glass-card p-6 flex items-center justify-between hover:bg-white/5 transition-colors" data-aos="fade-left" data-aos-delay="300">
+                    <div class="glass-card p-6 flex items-center justify-between hover:bg-white shadow-sm border-gray-100 transition-colors" data-aos="fade-left" data-aos-delay="300">
                         <div class="flex items-center gap-3">
                             <div class="p-3 bg-orange-500/10 rounded-lg text-orange-400"><i class="fas fa-temperature-half"></i></div>
-                            <span class="text-gray-300">Temp</span>
+                            <span class="text-gray-700">Temp</span>
                         </div>
                         <span class="font-bold text-2xl" data-pollutant="temp">28°C</span>
                     </div>
@@ -278,28 +278,28 @@
                 
                 <div class="bg-yellow-500/10 border-l-4 border-yellow-500 p-4 mb-6 rounded-r-lg">
                     <h4 class="font-bold text-yellow-500 mb-1">Moderate Air Quality</h4>
-                    <p class="text-sm text-gray-400">Sensitive groups should limit prolonged outdoor exertion.</p>
+                    <p class="text-sm text-gray-600">Sensitive groups should limit prolonged outdoor exertion.</p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/5 p-4 rounded-xl text-center hover:bg-white/10 transition-colors">
-                        <i class="fas fa-mask text-2xl text-gray-400 mb-2"></i>
-                        <p class="text-sm font-bold text-gray-300">Mask</p>
+                    <div class="bg-white shadow-sm border-gray-100 p-4 rounded-xl text-center hover:bg-gray-100 border-gray-200 transition-colors">
+                        <i class="fas fa-mask text-2xl text-gray-600 mb-2"></i>
+                        <p class="text-sm font-bold text-gray-700">Mask</p>
                         <p class="text-xs text-gray-500">Optional</p>
                     </div>
-                    <div class="bg-white/5 p-4 rounded-xl text-center hover:bg-white/10 transition-colors">
+                    <div class="bg-white shadow-sm border-gray-100 p-4 rounded-xl text-center hover:bg-gray-100 border-gray-200 transition-colors">
                         <i class="fas fa-door-open text-2xl text-brand-green mb-2"></i>
-                        <p class="text-sm font-bold text-gray-300">Ventilation</p>
+                        <p class="text-sm font-bold text-gray-700">Ventilation</p>
                         <p class="text-xs text-gray-500">Recommended</p>
                     </div>
-                    <div class="bg-white/5 p-4 rounded-xl text-center hover:bg-white/10 transition-colors">
+                    <div class="bg-white shadow-sm border-gray-100 p-4 rounded-xl text-center hover:bg-gray-100 border-gray-200 transition-colors">
                         <i class="fas fa-person-running text-2xl text-blue-400 mb-2"></i>
-                        <p class="text-sm font-bold text-gray-300">Sports</p>
+                        <p class="text-sm font-bold text-gray-700">Sports</p>
                         <p class="text-xs text-gray-500">Safe</p>
                     </div>
-                    <div class="bg-white/5 p-4 rounded-xl text-center hover:bg-white/10 transition-colors">
-                        <i class="fas fa-fan text-2xl text-gray-400 mb-2"></i>
-                        <p class="text-sm font-bold text-gray-300">Purifier</p>
+                    <div class="bg-white shadow-sm border-gray-100 p-4 rounded-xl text-center hover:bg-gray-100 border-gray-200 transition-colors">
+                        <i class="fas fa-fan text-2xl text-gray-600 mb-2"></i>
+                        <p class="text-sm font-bold text-gray-700">Purifier</p>
                         <p class="text-xs text-gray-500">Low Mode</p>
                     </div>
                 </div>
@@ -326,17 +326,17 @@
             <div class="text-center mb-16">
                 <span class="text-brand-accent font-mono text-sm tracking-widest uppercase mb-2 block">Our Future Vision</span>
                 <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Mobile Sensor Technology</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">We are developing hardware to bridge the data gap. Turning every vehicle into a monitoring station.</p>
+                <p class="text-gray-600 max-w-2xl mx-auto">We are developing hardware to bridge the data gap. Turning every vehicle into a monitoring station.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card p-8 text-center relative border border-brand-green/40 shadow-[0_0_20px_rgba(73,167,96,0.15)] hover:-translate-y-2 transition-transform duration-300">
+                <div class="glass-card p-8 text-center relative border border-brand-green/20 shadow-[0_0_20px_rgba(73,167,96,0.15)] hover:-translate-y-2 transition-transform duration-300">
                     <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-accent text-black text-[10px] font-bold px-3 py-1 rounded-full">PROTOTYPE</div>
                     <div class="w-16 h-16 mx-auto bg-brand-green rounded-full flex items-center justify-center text-2xl mb-6 shadow-lg shadow-brand-green/30">
                         <i class="fas fa-microchip text-black"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">AirSight IoT Node</h3>
-                    <p class="text-gray-400 text-sm">A compact, low-cost hardware sensor designed to attach to vehicle roofs. Measures PM2.5, PM10, and NO2 in motion.</p>
+                    <p class="text-gray-600 text-sm">A compact, low-cost hardware sensor designed to attach to vehicle roofs. Measures PM2.5, PM10, and NO2 in motion.</p>
                 </div>
 
                 <div class="glass-card p-8 text-center relative hover:-translate-y-2 transition-transform duration-300">
@@ -344,7 +344,7 @@
                         <i class="fas fa-network-wired text-blue-400"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Mesh Network</h3>
-                    <p class="text-gray-400 text-sm">Data collected from taxis and buses creates a live heatmap of street-level pollution.</p>
+                    <p class="text-gray-600 text-sm">Data collected from taxis and buses creates a live heatmap of street-level pollution.</p>
                 </div>
 
                 <div class="glass-card p-8 text-center relative hover:-translate-y-2 transition-transform duration-300">
@@ -352,13 +352,13 @@
                         <i class="fas fa-brain text-purple-400"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Predictive AI</h3>
-                    <p class="text-gray-400 text-sm">Our algorithms process this mobile data to predict pollution spikes before they happen.</p>
+                    <p class="text-gray-600 text-sm">Our algorithms process this mobile data to predict pollution spikes before they happen.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center border-t border-white/5 bg-black/40 text-sm text-gray-500">
+    <footer class="py-10 text-center border-t border-gray-200 bg-gray-100 text-sm text-gray-500">
         <p>&copy; 2025 AirSight. Tech for a Cleaner Future.</p>
     </footer>
 
@@ -389,7 +389,7 @@
                 }
             }
             draw() {
-                ctx.fillStyle = `rgba(150, 160, 155, ${this.opacity})`; // Grayish Dust color
+                ctx.fillStyle = `rgba(200, 210, 205, ${this.opacity})`; // Grayish Dust color
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -415,7 +415,7 @@
 
         // 3. Map Setup (Dark Mode)
         const map = L.map('map').setView([20.5937, 78.9629], 4); 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; CARTO',
             maxZoom: 19
         }).addTo(map);
@@ -643,11 +643,11 @@
             
             if (type === 'city') {
                 cityBtn.className = 'px-4 py-2 bg-brand-green text-white font-bold rounded-lg hover:bg-[#3d8b50] transition-colors';
-                stateBtn.className = 'px-4 py-2 glass-card hover:bg-white/10 font-medium text-white transition-colors';
+                stateBtn.className = 'px-4 py-2 glass-card hover:bg-gray-100 border-gray-200 font-medium text-gray-900 transition-colors';
                 stateSelector.classList.add('hidden');
                 searchInput.placeholder = 'Enter City Name (e.g. Delhi, Mumbai, Bangalore)';
             } else {
-                cityBtn.className = 'px-4 py-2 glass-card hover:bg-white/10 font-medium text-white transition-colors';
+                cityBtn.className = 'px-4 py-2 glass-card hover:bg-gray-100 border-gray-200 font-medium text-gray-900 transition-colors';
                 stateBtn.className = 'px-4 py-2 bg-brand-green text-white font-bold rounded-lg hover:bg-[#3d8b50] transition-colors';
                 stateSelector.classList.remove('hidden');
                 searchInput.placeholder = 'Enter State Name (e.g. Maharashtra, Karnataka)';
@@ -769,25 +769,25 @@
         const chatBubble = document.createElement('div');
         chatBubble.className = "fixed bottom-6 right-6 z-50";
         chatBubble.innerHTML = `
-            <div id="chatWindow" class="hidden bg-[#0e110f] border border-brand-green/30 w-80 md:w-96 rounded-2xl shadow-[0_0_30px_rgba(73,167,96,0.15)] flex-col overflow-hidden mb-4 transition-all" style="height: 500px;">
-                <div class="bg-brand-green/10 border-b border-brand-green/30 p-4 flex justify-between items-center backdrop-blur-md">
+            <div id="chatWindow" class="hidden bg-white border border-brand-green/20 w-80 md:w-96 rounded-2xl shadow-[0_0_30px_rgba(73,167,96,0.15)] flex-col overflow-hidden mb-4 transition-all" style="height: 500px;">
+                <div class="bg-brand-green/10 border-b border-brand-green/20 p-4 flex justify-between items-center backdrop-blur-md">
                     <div class="flex items-center gap-2">
                         <div class="w-8 h-8 rounded-full bg-brand-green/20 flex items-center justify-center">
                             <i class="fas fa-robot text-brand-green"></i>
                         </div>
-                        <h3 class="text-white font-bold font-display">AI Assistant</h3>
+                        <h3 class="text-gray-900 font-bold font-display">AI Assistant</h3>
                     </div>
-                    <button id="closeChat" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-times"></i></button>
+                    <button id="closeChat" class="text-gray-600 hover:text-gray-900 transition-colors"><i class="fas fa-times"></i></button>
                 </div>
-                <div class="p-3 border-b border-white/5 bg-black/20">
-                    <div class="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-1.5 focus-within:ring-1 ring-brand-green/50">
+                <div class="p-3 border-b border-gray-200 bg-gray-50">
+                    <div class="flex items-center gap-2 bg-white shadow-sm border-gray-100 rounded-lg px-3 py-1.5 focus-within:ring-1 ring-brand-green/50">
                         <i class="fas fa-city text-gray-500 text-sm"></i>
-                        <input id="chatCity" type="text" value="Delhi" placeholder="City Name" class="bg-transparent border-none text-white text-sm w-full outline-none placeholder-gray-600" />
+                        <input id="chatCity" type="text" value="Delhi" placeholder="City Name" class="bg-transparent border-none text-gray-900 text-sm w-full outline-none placeholder-gray-600" />
                     </div>
                 </div>
                 <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4">
                     <div class="flex justify-start">
-                        <div class="inline-block max-w-[80%] rounded-2xl px-3 py-2 text-sm bg-white/10 text-gray-200 rounded-bl-none border border-white/5">
+                        <div class="inline-block max-w-[80%] rounded-2xl px-3 py-2 text-sm bg-gray-100 border-gray-200 text-gray-800 rounded-bl-none border border-gray-200">
                             <div class="text-[10px] text-brand-accent mb-1 uppercase tracking-wider font-bold">
                                 <i class="fas fa-sparkles mr-1"></i> AI-Generated 
                             </div>
@@ -795,16 +795,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-3 bg-black/40 border-t border-white/5 backdrop-blur-md">
+                <div class="p-3 bg-gray-100 border-t border-gray-200 backdrop-blur-md">
                     <form id="chatForm" class="flex gap-2">
-                        <input id="chatInput" type="text" placeholder="Ask about health risks..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-brand-green/50 placeholder-gray-500" />
-                        <button type="submit" id="chatSubmitBtn" class="bg-brand-green hover:bg-[#3d8b50] text-white w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
+                        <input id="chatInput" type="text" placeholder="Ask about health risks..." class="flex-1 bg-white shadow-sm border-gray-100 border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-brand-green/50 placeholder-gray-500" />
+                        <button type="submit" id="chatSubmitBtn" class="bg-brand-green hover:bg-[#3d8b50] text-gray-900 w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
                             <i class="fas fa-paper-plane text-sm"></i>
                         </button>
                     </form>
                 </div>
             </div>
-            <button id="openChat" class="bg-brand-green hover:bg-[#3d8b50] text-white w-14 h-14 rounded-full shadow-[0_0_20px_rgba(73,167,96,0.5)] flex items-center justify-center transition-transform hover:scale-110 ml-auto block">
+            <button id="openChat" class="bg-brand-green hover:bg-[#3d8b50] text-gray-900 w-14 h-14 rounded-full shadow-[0_0_20px_rgba(73,167,96,0.5)] flex items-center justify-center transition-transform hover:scale-110 ml-auto block">
                 <i class="fas fa-comment-medical text-xl"></i>
             </button>
         `;
@@ -850,7 +850,7 @@
             
             let bgClass = role === 'user' 
                 ? 'bg-brand-green text-white rounded-br-none' 
-                : 'bg-white/10 text-gray-200 rounded-bl-none border border-white/5';
+                : 'bg-gray-100 border-gray-200 text-gray-800 rounded-bl-none border border-gray-200';
                 
             let aiBadge = role === 'assistant' 
                 ? `<div class="text-[10px] text-brand-accent mb-1 uppercase tracking-wider font-bold">
@@ -873,7 +873,7 @@
             div.id = 'chatLoader';
             div.className = 'flex justify-start';
             div.innerHTML = `
-                <div class="bg-white/10 rounded-2xl rounded-bl-none p-4 border border-white/5 flex gap-1 items-center">
+                <div class="bg-gray-100 border-gray-200 rounded-2xl rounded-bl-none p-4 border border-gray-200 flex gap-1 items-center">
                     <div class="w-2 h-2 rounded-full bg-brand-green animate-bounce"></div>
                     <div class="w-2 h-2 rounded-full bg-brand-green animate-bounce delay-100"></div>
                     <div class="w-2 h-2 rounded-full bg-brand-green animate-bounce delay-200"></div>
